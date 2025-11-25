@@ -1,11 +1,11 @@
 # DEIA – Diários Eletrônicos com Inteligência Artificial  
 **Versão:** 1.0  
-**Autor:** Fernando Paranhos – CEPE  
+**Autor:** João Alvarez 
 **Arquitetura:** Python (AWS Lambda) • S3 • OpenAI Responses API • Vector Stores  
 
 ---
 
-## 📌 Sobre o Projeto
+# 📌 Sobre o Projeto
 
 O **DEIA** é uma plataforma de pesquisa inteligente sobre os **Diários Oficiais** que utilizam o Sistema de Diários Oficiais Eletrônicos (SDOE).
 
@@ -19,13 +19,13 @@ A solução usa IA generativa com **RAG** (Retrieval-Augmented Generation) para 
 
 ---
 
-## 🚀 Objetivo
+# 🚀 Objetivo
 
 Democratizar o acesso ao conteúdo dos Diários Oficiais, permitindo pesquisa natural, rápida e inteligente, elevando o nível de transparência e a eficiência do serviço público.
 
 ---
 
-## 🧠 Funcionalidades Principais
+# 🧠 Funcionalidades Principais
 
 - Chat com IA (RAG)  
 - Ingestão automática de PDFs diariamente  
@@ -38,7 +38,7 @@ Democratizar o acesso ao conteúdo dos Diários Oficiais, permitindo pesquisa na
 
 ---
 
-## 🏗 Arquitetura
+# 🏗 Arquitetura
 
 ```text
 +-------------------------+
@@ -72,7 +72,7 @@ Democratizar o acesso ao conteúdo dos Diários Oficiais, permitindo pesquisa na
 | - Armazenamento         |
 +-------------------------+
 ````
-📂 Estrutura do Repositóriotext
+# 📂 Estrutura do Repositóriotext
 ```
 deia-server/
 │
@@ -100,114 +100,96 @@ deia-server/
 ```
 
 
-⚙️ Requisitos
+# ⚙️ Requisitos
+
 - Python 3.11
-
 - Pip + virtualenv (opcional)
-
 - Conta OpenAI com Vector Store ativo
-
 - AWS CLI configurado com permissões para:
-
 - S3
-
 - Lambda
-
 - CloudWatch Logs
-
 - API Gateway
 
-🔧 Instalação (Ambiente Local)
+# 🔧 Instalação (Ambiente Local)
+
 1. Clone o repositório
 ```
-bash
 git clone https://gitlab.com/<seu-grupo>/deia.git
 cd deia
 ```
 2. Crie ambiente virtual
 ``
-bash
 python3.11 -m venv venv
 source venv/bin/activate
 ``
 3. Instale dependências
 ``
-bash
 pip install -r api/requirements.txt
 ``
 4. Configure sua OPENAI_API_KEY
 ```
-bash
 export OPENAI_API_KEY="sua-chave"
 ```
-☁️ Deploy no AWS (Lambda)
-1. Gerar pacote
+# ☁️ Deploy no AWS (Lambda)
+
+### 1. Gerar pacote
 ```
-bash
 cd api
 pip install -r requirements.txt -t package/
 cp *.py package/
 cd package
 zip -r deia_lambda.zip .
 ```
-3. Subir para Lambda
+### 2. Subir para Lambda
 ```
-bash
 aws lambda update-function-code \
   --function-name deia-chat \
   --zip-file fileb://deia_lambda.zip
 ```
-📥 Ingestão Diária (Vector Store)
-A ingestão ocorre automaticamente via Lambda (cron) lendo:
-```
-php-template
-s3://cepebr-prod/1/cadernos/<ano>/<mes>/<dia>/
-```
-Para ingestão manual:
-```
-bash
-python3.11 scripts/inserir_vectorstore.py
-```
-🛡 Painel do Moderador
-O painel mostra:
+# 📥 Ingestão Diária (Vector Store)
 
-- Status do Vector Store
+  ## A ingestão ocorre automaticamente via Lambda (cron) lendo:
+  ```
+  php-template
+  s3://cepebr-prod/1/cadernos/<ano>/<mes>/<dia>/
+  ```
+  ## Para ingestão manual:
+  ```
+  python3.11 scripts/inserir_vectorstore.py
+  ```
+# 🛡 Painel do Moderador
+  ## O painel mostra:
 
-- Última ingestão
+  - Status do Vector Store
+  - Última ingestão
+  - Número de chunks
+  - Logs de consulta
+  - Botões para reprocessamento
 
-- Número de chunks
+### A interface é hospedada diretamente em S3.
 
-- Logs de consulta
+# 📊 Logs e Auditoria
 
-- Botões para reprocessamento
+  ##Logs são enviados para:
 
-A interface é hospedada diretamente em S3.
+  - CloudWatch (execuções Lambda)
 
-📊 Logs e Auditoria
-Logs são enviados para:
+# S3 (ingestões e consultas)
 
-- CloudWatch (execuções Lambda)
+  ## Exemplo:
+  ```
+  json
+  {
+    "timestamp": "2025-11-24T13:22:10",
+    "estado": "PE",
+    "pergunta": "Quais atos de nomeação hoje?",
+    "resposta_tokens": 2048
+  }
+  ```
 
-S3 (ingestões e consultas)
-
-Exemplo:
-```
-json
-{
-  "timestamp": "2025-11-24T13:22:10",
-  "estado": "PE",
-  "pergunta": "Quais atos de nomeação hoje?",
-  "resposta_tokens": 2048
-}
-```
-📘 Documentação Completa
-Documentação detalhada:
-```
-bash
-docs/projeto-deia.md
-```
-📞 Contato
-Responsável Técnico:
-João Alvarez Analista de Sistemas / Engenharia do DEIA
+# 📞 Contato
+ ## Responsável Técnico:
+  ###   João Alvarez Analista de Sistemas / Engenharia do DEIA
 
 
